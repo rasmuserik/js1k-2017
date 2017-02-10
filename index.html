@@ -1,0 +1,129 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Tron vs. Game of Life</title>
+    <meta name="format-detection" content="telephone=no">
+    <meta name="msapplication-tap-highlight" content="no">
+    <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes">
+    <link rel=icon href=icon.png>
+    <meta charset="UTF-8">
+  </head>
+  <body>
+    <canvas id=a style="position:absolute;top:0;left:0;width:100%;height:100%"></canvas>
+    <script>
+b = document.body;
+c = a.getContext('2d');
+a.style.height=window.innerHeight;
+a.style.width=window.innerWidth;
+      
+
+// Minified code, changed top.reload to location.reload due to not in JS1K shim
+
+d=document;l=localStorage;s=a.width=a.height=128;p=(z=-s)*6.5;q=w=0;b.onkeydown=(e)=>z={w:-s,a:-1,s:s,d:1}[e.key]||location.reload();setInterval(_=>{r=x=>x*4+3&s*s*4-1;g=x=>u.data[r(i+x)];f=x=>q.data[r(x)]=255;u=q;q=c.createImageData(s,s);for(i=s*s;--i;((!(i&s-1)||s*(s-2)<i&&i&2)||m==765?255:m==510?g(0):0)&&f(i))m=g(1)+g(-1)+g(s)+g(-s)+g(1+s)+g(1-s)+g(s-1)+g(-s-1);if(g(p+=z))for(;i++<s*s;)f(i);else[p-z-z,p-z,p,j=p-.75,j-z].map(f,t.innerHTML=`
+<b>JS1K game by solsort.com
+
+Press Space to start
+Steer using W A S D
+Avoid obstacles
+
+High Score: ${v=Math.max(w,+l.getItem(0))}
+Score: `+w++);l.setItem(0,v);c.putImageData(q,0,0)},50);d.write('<pre id=t style=position:fixed;top:0;color:#0a0;width:100%;text-align:center>');a.style.imageRendering='pixelated'
+
+/**/
+/*
+
+
+// Size of map, must be a power of two.
+size = a.width = a.height = 128;
+
+// Place the rocket(player), near the bottom, in the middle, facing upward
+position = size * (size - 8) + size / 2;
+direction = -size;
+
+// Various initialisation.
+score = current = 0;
+
+// Key handling, wasd change direction, any other restarts(reloads)
+b.onkeydown = (e) => direction = ({
+        'w': -size,
+        'a': -1,
+        's': size,
+        'd':1
+    })[e.key]
+    || top.reload();
+
+// Main loop, 20 times per second
+setInterval(() => {
+
+    // Utility functions for accessing the pixels.
+    // Mainly only use the alpha channel, as pixel value.
+    pixelPos = (x) => x * 4 + 3 & size * size * 4 - 1;
+    getPixel = (x) => prev.data[pixelPos(i + x)];
+    setPixel = (x, value) => current.data[pixelPos(x)] = value;
+
+    // Make a new pixel buffer, and remember the old one
+    prev = current;
+    current = c.createImageData(size, size);
+
+    for(i = size * size; i; --i) {
+        // Game of life
+        sum = getPixel(1) + getPixel(-1) + getPixel(size) + getPixel(-size) +
+              getPixel(1+size) + getPixel(1-size) + getPixel(size-1) + getPixel(-size-1)
+        setPixel(i, sum === 765
+                    ? 255
+                    : sum === 510
+                      ? getPixel(0)
+                      : 0);
+
+        // Make edge border, and land in the bottom.
+        if(!(i&size-1)||size*(size-2)<i&&i&2) {
+            setPixel(i,255);
+        }
+    }
+    
+
+    // Collision check
+    if(getPixel(position)) {
+        // Make screen black
+        for(i = 0; i < size * size; ++i) {
+            setPixel(i,255);
+        }
+    } else {
+        // Draw the rocket(player)
+        setPixel(position-direction * 2, 255);
+        setPixel(position-direction, 255);
+        setPixel(position,255);
+
+        // Color the rocket(player) red
+        setPixel(position - 0.75, 255);
+        setPixel(position - direction - 0.75, 255);
+
+        // Move the player
+        position += direction;
+
+        // User guide, score, and high score
+        t.innerHTML=`
+<b>
+JS1K game by solsort.com
+
+Press Space to start
+Steer using W A S D
+Avoid obstacles
+
+High Score: ${document.cookie = Math.max(score, +document.cookie)} 
+Score: ${score++}
+`
+    };
+    c.putImageData(current, 0, 0);
+
+}, 50);
+
+// Container for guide, - and styling
+document.write('<pre id=t style=position:fixed;top:0;color:#0a0;width:100%;text-align:center>');
+a.style.imageRendering='pixelated';
+/**/
+  </script>
+</body>
